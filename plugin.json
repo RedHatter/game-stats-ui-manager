@@ -1,10 +1,10 @@
 {
-  "name": "Players in game",
+  "name": "Players In Game",
   "author": "Ava Johnson",
   "flags": [],
   "publish": {
     "tags": [],
     "description": "Display how many players are currently in game on the app details page.",
-    "image": "https://opengraph.githubassets.com/1/SteamDeckHomebrew/PluginLoader"
+    "image": "https://github.com/RedHatter/players-in-game/blob/main/screenshot.jpg?raw=true"
   }
 }

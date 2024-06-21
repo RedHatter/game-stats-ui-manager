@@ -1,6 +1,6 @@
 {
   "name": "players-in-game",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Decky loader plugin to show how many players are currently in game ",
   "scripts": {
     "build": "shx rm -rf dist && rollup -c",
@@ -11,12 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/RedHatter/players-in-game.git"
   },
-  "keywords": [
-    "decky",
-    "plugin",
-    "steam-deck",
-    "deck"
-  ],
+  "keywords": ["decky", "plugin", "steam-deck", "deck"],
   "author": "Ava Johnson <ava.johnson@zohomail.com>",
   "license": "BSD-3-Clause",
   "bugs": {
@@ -44,10 +39,7 @@
   },
   "pnpm": {
     "peerDependencyRules": {
-      "ignoreMissing": [
-        "react",
-        "react-dom"
-      ]
+      "ignoreMissing": ["react", "react-dom"]
     }
   }
 }
