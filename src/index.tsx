@@ -10,33 +10,13 @@ import {
   ServerAPI,
   showContextMenu,
   staticClasses,
-} from "decky-frontend-lib";
-import { VFC } from "react";
-import { FaShip } from "react-icons/fa";
+} from 'decky-frontend-lib'
+import { FC, VFC } from 'react'
+import { FaShip } from 'react-icons/fa'
 
-import logo from "../assets/logo.png";
+import logo from '../assets/logo.png'
 
-// interface AddMethodArgs {
-//   left: number;
-//   right: number;
-// }
-
-const Content: VFC<{ serverAPI: ServerAPI }> = ({serverAPI}) => {
-  // const [result, setResult] = useState<number | undefined>();
-
-  // const onClick = async () => {
-  //   const result = await serverAPI.callPluginMethod<AddMethodArgs, number>(
-  //     "add",
-  //     {
-  //       left: 2,
-  //       right: 2,
-  //     }
-  //   );
-  //   if (result.success) {
-  //     setResult(result.result);
-  //   }
-  // };
-
+const Content: FC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   return (
     <PanelSection title="Panel Section">
       <PanelSectionRow>
@@ -49,7 +29,7 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({serverAPI}) => {
                 <MenuItem onSelected={() => {}}>Item #2</MenuItem>
                 <MenuItem onSelected={() => {}}>Item #3</MenuItem>
               </Menu>,
-              e.currentTarget ?? window
+              e.currentTarget ?? window,
             )
           }
         >
@@ -58,7 +38,7 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({serverAPI}) => {
       </PanelSectionRow>
 
       <PanelSectionRow>
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
           <img src={logo} />
         </div>
       </PanelSectionRow>
@@ -67,39 +47,37 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({serverAPI}) => {
         <ButtonItem
           layout="below"
           onClick={() => {
-            Navigation.CloseSideMenus();
-            Navigation.Navigate("/decky-plugin-test");
+            Navigation.CloseSideMenus()
+            Navigation.Navigate('/decky-plugin-test')
           }}
         >
           Router
         </ButtonItem>
       </PanelSectionRow>
     </PanelSection>
-  );
-};
+  )
+}
 
 const DeckyPluginRouterTest: VFC = () => {
   return (
-    <div style={{ marginTop: "50px", color: "white" }}>
+    <div style={{ marginTop: '50px', color: 'white' }}>
       Hello World!
-      <DialogButton onClick={() => Navigation.NavigateToLibraryTab()}>
-        Go to Library
-      </DialogButton>
+      <DialogButton onClick={() => Navigation.NavigateToLibraryTab()}>Go to Library</DialogButton>
     </div>
-  );
-};
+  )
+}
 
 export default definePlugin((serverApi: ServerAPI) => {
-  serverApi.routerHook.addRoute("/decky-plugin-test", DeckyPluginRouterTest, {
+  serverApi.routerHook.addRoute('/decky-plugin-test', DeckyPluginRouterTest, {
     exact: true,
-  });
+  })
 
   return {
     title: <div className={staticClasses.Title}>Example Plugin</div>,
     content: <Content serverAPI={serverApi} />,
     icon: <FaShip />,
     onDismount() {
-      serverApi.routerHook.removeRoute("/decky-plugin-test");
+      serverApi.routerHook.removeRoute('/decky-plugin-test')
     },
-  };
-});
+  }
+})
