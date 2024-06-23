@@ -1,20 +1,5 @@
-import { useParams } from 'decky-frontend-lib'
+import { findClass, useParams } from 'decky-frontend-lib'
 import { FC, useEffect, useState } from 'react'
-
-const labelStyle = {
-  fontWeight: 'bold',
-  fontSize: '12px',
-  lineHeight: '22px',
-  letterSpacing: '.5px',
-  textTransform: 'uppercase',
-  color: 'rgba(255,255,255,.7)',
-} as const
-
-const valueStyle = {
-  lineHeight: '20px',
-  color: '#fff',
-  fontWeight: '500',
-} as const
 
 const cache = new Map<string, { data: Promise<number>; at: number }>()
 
@@ -46,8 +31,8 @@ const PlayerCount: FC = () => {
 
   return value === undefined ? null : (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div style={labelStyle}>In game</div>
-        <div style={valueStyle}>{value.toLocaleString()}</div>
+        <div className={findClass('PlayBarLabel') ?? ''}>In game</div>
+        <div className={findClass('PlayBarDetailLabel') ?? ''}>{value.toLocaleString()}</div>
       </div>
     )
 }
