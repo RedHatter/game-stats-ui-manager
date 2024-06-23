@@ -25,7 +25,8 @@ const getPlayerCount = (appid: string) => {
     value = {
       data: fetch('https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1?appid=' + appid)
         .then((res) => res.json())
-        .then((json) => json.response.player_count),
+        .then((json) => json.response.player_count)
+        .catch(() => cache.delete(appid)),
       at: Date.now(),
     }
     cache.set(appid, value)
@@ -37,13 +38,13 @@ const getPlayerCount = (appid: string) => {
 const PlayerCount: FC = () => {
   const { appid } = useParams<{ appid: string }>()
 
-  const [value, setValue] = useState<null | number>(null)
+  const [value, setValue] = useState<undefined | number>()
 
   useEffect(() => {
     getPlayerCount(appid).then(setValue)
   }, [appid])
 
-  return value === null ? null : (
+  return value === undefined ? null : (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={labelStyle}>In game</div>
         <div style={valueStyle}>{value.toLocaleString()}</div>
