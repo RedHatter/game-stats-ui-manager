@@ -8,7 +8,10 @@ const getPlayerCount = (appid: string) => {
 
   if (!value || Date.now() - value.at > 300000 /* 5 minutes */) {
     value = {
-      data: fetch('https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1?appid=' + appid)
+      data: fetch(
+        'https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1?key=2ED50E886A67EA111EA92184F3560D35&appid=' +
+          appid,
+      )
         .then((res) => res.json())
         .then((json) => json.response.player_count)
         .catch(() => {
