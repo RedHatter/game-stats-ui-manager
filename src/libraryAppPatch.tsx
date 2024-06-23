@@ -1,11 +1,11 @@
 import { ReactElement } from 'react'
-import { hasProp, patch } from './helpers'
+import { hasProp, isShortcut, patch } from './helpers'
 import PlayerCount from './PlayerCount'
 
 const libraryAppPatch = (props: { path: string; children: ReactElement }) => {
   patch(
     props.children.props,
-    (ret) => ret.props.children,
+    (ret) => (isShortcut(ret.props.children.props.overview) ? undefined : ret.props.children),
     (ret) => ret.props.children?.[1]?.props.children.props.children.find(hasProp('children')).props.children,
     (ret) => ret.props.children.find(hasProp('overview')),
     (ret) => ret,

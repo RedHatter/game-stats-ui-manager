@@ -11,7 +11,9 @@ const getPlayerCount = (appid: string) => {
       data: fetch('https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1?appid=' + appid)
         .then((res) => res.json())
         .then((json) => json.response.player_count)
-        .catch(() => cache.delete(appid)),
+        .catch(() => {
+          cache.delete(appid)
+        }),
       at: Date.now(),
     }
     cache.set(appid, value)

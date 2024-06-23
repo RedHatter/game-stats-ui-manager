@@ -1,4 +1,4 @@
-import { RoutePatch, ServerAPI, afterPatch, wrapReactClass, wrapReactType } from 'decky-frontend-lib'
+import { RoutePatch, ServerAPI, afterPatch, findModuleChild, wrapReactClass, wrapReactType } from 'decky-frontend-lib'
 import { ReactElement } from 'react'
 
 export const addPatch = (serverAPI: ServerAPI, route: string, patch: RoutePatch) => {
@@ -39,3 +39,9 @@ export const patch = (object: any, ...resolvers: Array<(ret: ReactElement) => Re
     afterPatch(object, 'type', handler)
   }
 }
+
+const parseAppType = findModuleChild(
+  (m) => m && Object.values(m).find((c) => c?.toString().includes('k_EAppTypeShortcut')),
+)
+
+export const isShortcut = (overview: any) => parseAppType(0, overview.app_type) === 'k_EAppTypeShortcut'
