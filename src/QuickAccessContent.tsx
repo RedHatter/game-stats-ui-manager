@@ -42,7 +42,10 @@ const QuickAccessContent: FC = () => {
           entries={entries.map((data, position) => ({
             data,
             position,
-            label: data.id === '#in_game' ? '(Custom) In game' : localize(data.id),
+            label:
+              data.id === '#in_game' ? '(Custom) In game'
+              : data.id === '#appid' ? '(Custom) App ID'
+              : localize(data.id),
           }))}
           onSave={(entries) => set({ entries: entries.map((o) => o.data!) })}
           interactables={({ entry }) => (
@@ -56,6 +59,8 @@ const QuickAccessContent: FC = () => {
           )}
           fieldProps={{ indentLevel: 0.4 }}
         />
+      </PanelSection>
+      <PanelSection>
         <DialogButton onClick={reset}>Reset</DialogButton>
       </PanelSection>
     </>

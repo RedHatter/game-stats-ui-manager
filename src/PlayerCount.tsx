@@ -1,5 +1,6 @@
 import { findClass, useParams } from 'decky-frontend-lib'
 import { FC, useEffect, useState } from 'react'
+import PlayBarSection from './PlayBarSection'
 
 const cache = new Map<string, { data: Promise<number>; at: number }>()
 
@@ -36,12 +37,7 @@ const PlayerCount: FC = () => {
     }
   }, [appid])
 
-  return value === undefined ? null : (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div className={findClass('PlayBarLabel') ?? ''}>In game</div>
-        <div className={findClass('PlayBarDetailLabel') ?? ''}>{value.toLocaleString()}</div>
-      </div>
-    )
+  return value === undefined ? null : <PlayBarSection label="In game" detail={value.toLocaleString()} />
 }
 
 export default PlayerCount

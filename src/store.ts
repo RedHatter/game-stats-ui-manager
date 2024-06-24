@@ -12,6 +12,7 @@ export const validIDs = [
   '#AppDetails_SectionTitle_Achievements',
   '#AppDetails_SectionTitle_Controller',
   '#in_game',
+  '#appid',
 ] as const
 
 export type StoreEntry = {

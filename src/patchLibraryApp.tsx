@@ -3,6 +3,7 @@ import { hasProp, patchSequence } from './helpers'
 import PlayerCount from './PlayerCount'
 import { ServerAPI, afterPatch } from 'decky-frontend-lib'
 import { useStore, validIDs } from './store'
+import AppID from './AppID'
 
 const patchLibraryApp = (serverAPI: ServerAPI) => {
   let unpatch: { value: null | (() => void) } = { value: null }
@@ -27,6 +28,7 @@ const patchLibraryApp = (serverAPI: ServerAPI) => {
             ret.props.children = useStore.getState().entries.map((data) =>
               data.hidden ? false
               : data.id === '#in_game' ? <PlayerCount />
+              : data.id === '#appid' ? <AppID />
               : ret.props.children[validIDs.indexOf(data.id)],
             )
 
