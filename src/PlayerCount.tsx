@@ -31,7 +31,9 @@ const PlayerCount: FC = () => {
   const [value, setValue] = useState<undefined | number>()
 
   useEffect(() => {
-    getPlayerCount(appid).then(setValue)
+    if (!(window as any).collectionStore.deckDesktopApps.apps.get(appid)) {
+      getPlayerCount(appid).then(setValue)
+    }
   }, [appid])
 
   return value === undefined ? null : (

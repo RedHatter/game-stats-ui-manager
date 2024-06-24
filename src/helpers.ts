@@ -1,47 +1,49 @@
-import { RoutePatch, ServerAPI, afterPatch, findModuleChild, wrapReactClass, wrapReactType } from 'decky-frontend-lib'
+import { afterPatch, findModuleChild, wrapReactClass, wrapReactType } from 'decky-frontend-lib'
 import { ReactElement } from 'react'
-
-export const addPatch = (serverAPI: ServerAPI, route: string, patch: RoutePatch) => {
-  const routePatch = serverAPI.routerHook.addPatch(route, patch)
-  return () => serverAPI.routerHook.removePatch(route, routePatch)
-}
 
 export const hasProp = (prop: string) => (child: any) => prop in child.props
 
-export const patch = (object: any, ...resolvers: Array<(ret: ReactElement) => ReactElement | void>) => {
+type Resolver = {
+  lock?: boolean
+  (ret: ReactElement): ReactElement | void
+}
+
+export const patchSequence = (object: any, ...resolvers: Array<Resolver>) => {
   const handler = (_: unknown, ret: ReactElement) => {
     const [fn, ...rest] = resolvers
 
+    if (fn.lock) {
+      return ret
+    }
+
+    console.log(fn, ret)
     const obj = fn(ret)
+    fn.lock = true
 
     if (!rest.length) {
       return obj ?? ret
     }
 
     if (obj) {
-      patch(obj, ...rest)
+      patchSequence(obj, ...rest)
     }
 
     return ret
   }
 
   if (object.renderFunc) {
-    afterPatch(object, 'renderFunc', handler)
+    afterPatch(object, 'renderFunc', handler, { singleShot: true })
   } else if (object.type.render) {
-    afterPatch(object.type, 'render', handler)
+    afterPatch(object.type, 'render', handler, { singleShot: true })
   } else if (object.type.type) {
     wrapReactType(object)
-    afterPatch(object.type, 'type', handler)
+    afterPatch(object.type, 'type', handler, { singleShot: true })
   } else if (object.type.prototype?.render) {
     wrapReactClass(object)
-    afterPatch(object.type.prototype, 'render', handler)
+    afterPatch(object.type.prototype, 'render', handler, { singleShot: true })
   } else {
-    afterPatch(object, 'type', handler)
+    afterPatch(object, 'type', handler, { singleShot: true })
   }
 }
 
-const parseAppType = findModuleChild(
-  (m) => m && Object.values(m).find((c) => c?.toString().includes('k_EAppTypeShortcut')),
 )
-
-export const isShortcut = (overview: any) => parseAppType(0, overview.app_type) === 'k_EAppTypeShortcut'
