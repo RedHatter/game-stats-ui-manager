@@ -1,7 +1,8 @@
 import { ReactElement } from 'react'
 import { hasProp, patchSequence } from './helpers'
 import PlayerCount from './PlayerCount'
-import { ServerAPI, afterPatch, findModuleChild } from 'decky-frontend-lib'
+import { ServerAPI, afterPatch } from 'decky-frontend-lib'
+import { useStore, validIDs } from './store'
 
 const patchLibraryApp = (serverAPI: ServerAPI) => {
   let unpatch: { value: null | (() => void) } = { value: null }
@@ -23,9 +24,12 @@ const patchLibraryApp = (serverAPI: ServerAPI) => {
           ret.props.children.find(hasProp('className')).props.children[0].type.prototype,
           'render',
           (_: unknown, ret: ReactElement) => {
-            if (!ret.props.children.find((child: any) => child.type === PlayerCount)) {
-              ret.props.children.push(<PlayerCount />)
-            }
+            ret.props.children = useStore.getState().entries.map((data) =>
+              data.hidden ? false
+              : data.id === '#in_game' ? <PlayerCount />
+              : ret.props.children[validIDs.indexOf(data.id)],
+            )
+
             return ret
           },
         )

@@ -16,7 +16,6 @@ export const patchSequence = (object: any, ...resolvers: Array<Resolver>) => {
       return ret
     }
 
-    console.log(fn, ret)
     const obj = fn(ret)
     fn.lock = true
 
@@ -46,4 +45,10 @@ export const patchSequence = (object: any, ...resolvers: Array<Resolver>) => {
   }
 }
 
+export const localize = findModuleChild(
+  (m) =>
+    typeof m === 'object' &&
+    Object.values(m).find((p) => typeof p === 'function' && /function.*LocalizeString.*return void/.test(p.toString())),
 )
+
+export type ArrayElement<T extends readonly unknown[]> = T extends readonly (infer E)[] ? E : never
