@@ -1,8 +1,16 @@
-# Players In Game for Deck Loader
+# Game Stats UI Manager for Deck Loader
 
-Adds a info panel to the game page displaying how many players are currently in game. This info is pulled directly from the steam web API.
+Manage the game stats displayed on the app details page. Supports changing order, visibility, and adding a few additional stats.
 
-![Screenshot show new info panel](/screenshot.jpg?raw=true)
+## Custom stats
+* In game
+  Displays how many players are currently playing the game according the the steam web API.
+* App ID
+  Displays steam App ID of the currently selected game.
+
+If there any additinal stats or modifications you would like please do not hesitate to open an issue.
+
+![Screenshot showing the new game stats section](/screenshot.jpg?raw=true)
 
 ## Installing manually
 

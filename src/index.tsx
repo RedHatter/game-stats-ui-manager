@@ -1,5 +1,5 @@
 import { definePlugin, ServerAPI, staticClasses } from 'decky-frontend-lib'
-import { FaPeopleGroup } from 'react-icons/fa6'
+import { IoIosStats } from 'react-icons/io'
 import patchLibraryApp from './patchLibraryApp'
 import QuickAccessContent from './QuickAccessContent'
 import setupStyle from './style'
@@ -9,8 +9,8 @@ export default definePlugin((serverAPI: ServerAPI) => {
   const removeStyle = setupStyle()
 
   return {
-    title: <div className={staticClasses.Title}>Players in game</div>,
-    icon: <FaPeopleGroup />,
+    title: <div className={staticClasses.Title}>Game Stats UI Manager</div>,
+    icon: <IoIosStats />,
     content: <QuickAccessContent />,
     onDismount: () => {
       unpatch()

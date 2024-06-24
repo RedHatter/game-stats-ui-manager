@@ -1,10 +1,10 @@
 {
-  "name": "Players In Game",
+  "name": "Game Stats UI Manager",
   "author": "Ava Johnson",
   "flags": [],
   "publish": {
-    "tags": [],
-    "description": "Display how many players are currently in game on the app details page.",
-    "image": "https://github.com/RedHatter/players-in-game/blob/main/screenshot.jpg?raw=true"
+    "tags": ["stats", "ui"],
+    "description": "Manage the game stats displayed on the app details page. Suports changing order, visibility, and adding a few additional stats.",
+    "image": "https://github.com/RedHatter/game-stats-ui-manager/blob/main/screenshot.jpg?raw=true"
   }
 }

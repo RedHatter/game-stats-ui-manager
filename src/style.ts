@@ -4,11 +4,11 @@ import { Store, useStore } from './store'
 const updateStyle = (styleType: Store['playButtonSize']) => {
   const doc = findSP().document
 
-  let style = doc.getElementById('players-in-game-style')
+  let style = doc.getElementById('game-stats-ui-manager-style')
 
   if (!style) {
     style = doc.createElement('style')
-    style.id = 'players-in-game-style'
+    style.id = 'game-stats-ui-manager-style'
     doc.head.append(style)
   }
 
@@ -45,7 +45,7 @@ useStore.subscribe((state, prevState) => {
 
 const setupStyle = () => {
   updateStyle(useStore.getState().playButtonSize)
-  return () => findSP().document.getElementById('players-in-game-style')?.remove()
+  return () => findSP().document.getElementById('game-stats-ui-manager-style')?.remove()
 }
 
 export default setupStyle

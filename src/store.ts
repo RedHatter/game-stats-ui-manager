@@ -52,6 +52,6 @@ export const useStore = create<Store>()(
 
       reset: () => set(initialState),
     }),
-    { name: 'players-in-game' },
+    { name: 'game-stats-ui-manager' },
   ),
 )
