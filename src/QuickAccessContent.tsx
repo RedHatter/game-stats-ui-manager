@@ -1,6 +1,6 @@
-import { Button, PanelSection, ReorderableList } from 'decky-frontend-lib'
+import { Button, DialogButton, Dropdown, DropdownOption, PanelSection, ReorderableList } from 'decky-frontend-lib'
 import { FaEyeSlash } from 'react-icons/fa6'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { localize } from './helpers'
 import { StoreEntry, useStore } from './store'
 
@@ -17,30 +17,48 @@ const iconButtonStyles = {
   fontSize: '1.2em',
 } as const
 
+const dropdownOptions: Array<DropdownOption> = [
+  { label: 'Normal', data: 'normal' },
+  { label: 'Small', data: 'small' },
+  { label: 'Smallest', data: 'smallest' },
+  { label: 'Icon only', data: 'iconOnly' },
+]
+
 const QuickAccessContent: FC = () => {
-  const { entries, setEntries, toggle } = useStore()
+  const { entries, playButtonSize: actionButtonStyle, set, toggle, reset } = useStore()
 
   return (
-    <PanelSection title="Game Info Sections">
-      <ReorderableList<StoreEntry>
-        entries={entries.map((data, position) => ({
-          data,
-          position,
-          label: data.id === '#in_game' ? '(Custom) In game' : localize(data.id),
-        }))}
-        onSave={(entries) => setEntries(entries.map((o) => o.data!))}
-        interactables={({ entry }) => (
-          <Button
-            onClick={() => toggle(entry.data!.id)}
-            onOKActionDescription={entry.data?.hidden ? 'Unhide' : 'Hide'}
-            style={iconButtonStyles}
-          >
-            {entry.data?.hidden && <FaEyeSlash />}
-          </Button>
-        )}
-        fieldProps={{ indentLevel: 0.4 }}
-      />
-    </PanelSection>
+    <>
+      <PanelSection title="Play Button Size">
+        <Dropdown
+          menuLabel="Play Button Size"
+          rgOptions={dropdownOptions}
+          selectedOption={actionButtonStyle}
+          onChange={(opt) => set({ playButtonSize: opt.data })}
+        />
+      </PanelSection>
+      <PanelSection title="Game Info Sections">
+        <ReorderableList<StoreEntry>
+          entries={entries.map((data, position) => ({
+            data,
+            position,
+            label: data.id === '#in_game' ? '(Custom) In game' : localize(data.id),
+          }))}
+          onSave={(entries) => set({ entries: entries.map((o) => o.data!) })}
+          interactables={({ entry }) => (
+            <Button
+              onClick={() => toggle(entry.data!.id)}
+              onOKActionDescription={entry.data?.hidden ? 'Unhide' : 'Hide'}
+              style={iconButtonStyles}
+            >
+              {entry.data?.hidden && <FaEyeSlash />}
+            </Button>
+          )}
+          fieldProps={{ indentLevel: 0.4 }}
+        />
+        <DialogButton onClick={reset}>Reset</DialogButton>
+      </PanelSection>
+    </>
   )
 }
 export default QuickAccessContent
