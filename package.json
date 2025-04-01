@@ -3,35 +3,25 @@
   "version": "1.0.0",
   "description": "Manage the game stats displayed on the app details page. Suports changing order, visibility, and adding a few additional stats.",
   "scripts": {
-    "build": "shx rm -rf dist && rollup -c",
+    "build": "rollup -c",
     "watch": "rollup -c -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "pnpx @biomejs/biome check --write"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/RedHatter/game-stats-ui-manager.git"
-  },
+  "repository": "git+https://github.com/RedHatter/game-stats-ui-manager.git",
   "keywords": ["decky", "plugin", "steam-deck", "deck", "stats"],
   "author": "Ava Johnson <ava.johnson@zohomail.com>",
   "license": "BSD-3-Clause",
-  "bugs": {
-    "url": "https://github.com/RedHatter/game-stats-ui-manager/issues"
-  },
+  "bugs": "https://github.com/RedHatter/game-stats-ui-manager/issues",
   "homepage": "https://github.com/RedHatter/game-stats-ui-manager#readme",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^26.0.1",
-    "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-replace": "^5.0.7",
-    "@rollup/plugin-typescript": "^11.1.6",
+    "@decky/rollup": "^1.0.1",
     "@types/react": "18.3.3",
     "@types/webpack": "^5.28.5",
-    "prettier": "^3.3.2",
-    "rollup": "^4.18.0",
-    "rollup-plugin-import-assets": "^1.1.1",
-    "shx": "^0.3.4",
+    "biome": "^0.3.3",
+    "rollup": "^4.38.0",
     "tslib": "^2.6.3",
-    "typescript": "^5.5.2"
+    "typescript": "^5.8.2"
   },
   "dependencies": {
     "decky-frontend-lib": "^3.25.0",
