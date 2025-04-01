@@ -1,4 +1,4 @@
-import { findClass, findSP } from "@decky/ui"
+import { findClassByName, findSP } from "@decky/ui"
 import { type Store, useStore } from "./store"
 
 const updateStyle = (styleType: Store["playButtonSize"]) => {
@@ -16,19 +16,19 @@ const updateStyle = (styleType: Store["playButtonSize"]) => {
     styleType === "normal"
       ? ""
       : `
-      ${styleType === "smallest" || styleType === "iconOnly" ? `.${findClass("PlayButtonContainer")},` : ""}
-      .${findClass("PlayButtonContainer")} > div {
+      ${styleType === "smallest" || styleType === "iconOnly" ? `.${findClassByName("PlayButtonContainer")},` : ""}
+      .${findClassByName("PlayButtonContainer")} > div {
         min-width: initial !important;
       }
 
       ${
         styleType === "iconOnly"
           ? `
-          .${findClass("PlayButtonContainer")} svg {
+          .${findClassByName("PlayButtonContainer")} svg {
             margin-right: 0 !important;
           }
 
-          .${findClass("PlayButtonContainer")} svg + div {
+          .${findClassByName("PlayButtonContainer")} svg + div {
             display: none !important;
           }
           `

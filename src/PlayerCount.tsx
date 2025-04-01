@@ -5,6 +5,10 @@ import PlayBarSection from "./PlayBarSection"
 const cache = new Map<string, { data: Promise<number>; at: number }>()
 
 const getPlayerCount = (appid: string) => {
+  if ((window as any).collectionStore.deckDesktopApps.apps.has(Number.parseInt(appid))) {
+    return Promise.resolve(undefined)
+  }
+
   let value = cache.get(appid)
 
   if (!value || Date.now() - value.at > 300000 /* 5 minutes */) {
@@ -31,9 +35,7 @@ const PlayerCount: FC = () => {
   const [value, setValue] = useState<undefined | number>()
 
   useEffect(() => {
-    if (!(window as any).collectionStore.deckDesktopApps.apps.get(appid)) {
-      getPlayerCount(appid).then(setValue)
-    }
+    getPlayerCount(appid).then(setValue)
   }, [appid])
 
   return value === undefined ? null : <PlayBarSection label="In game" detail={value.toLocaleString()} />
