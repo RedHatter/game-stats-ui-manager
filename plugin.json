@@ -2,6 +2,7 @@
   "name": "Game Stats UI Manager",
   "author": "Ava Johnson",
   "flags": [],
+  "api_version": 1,
   "publish": {
     "tags": ["stats", "ui"],
     "description": "Manage the game stats displayed on the app details page. Suports changing order, visibility, and adding a few additional stats.",

@@ -1,5 +1,5 @@
-import { Button, DialogButton, Dropdown, type DropdownOption, PanelSection, ReorderableList } from "decky-frontend-lib"
-import { type FC, useState } from "react"
+import { Button, DialogButton, Dropdown, type DropdownOption, PanelSection, ReorderableList } from "@decky/ui"
+import type { FC } from "react"
 import { FaEyeSlash } from "react-icons/fa6"
 import { localize } from "./helpers"
 import { type StoreEntry, useStore } from "./store"

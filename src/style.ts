@@ -1,4 +1,4 @@
-import { findClass, findSP } from "decky-frontend-lib"
+import { findClass, findSP } from "@decky/ui"
 import { type Store, useStore } from "./store"
 
 const updateStyle = (styleType: Store["playButtonSize"]) => {

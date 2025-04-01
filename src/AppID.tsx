@@ -1,4 +1,4 @@
-import { useParams } from "decky-frontend-lib"
+import { useParams } from "@decky/ui"
 import PlayBarSection from "./PlayBarSection"
 
 const AppID = () => {

@@ -1,4 +1,4 @@
-import { findClass, useParams } from "decky-frontend-lib"
+import { useParams } from "@decky/ui"
 import { type FC, useEffect, useState } from "react"
 import PlayBarSection from "./PlayBarSection"
 

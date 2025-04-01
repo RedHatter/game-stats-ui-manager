@@ -1,4 +1,4 @@
-import { afterPatch, findModuleChild, wrapReactClass, wrapReactType } from "decky-frontend-lib"
+import { afterPatch, findModuleChild, wrapReactClass, wrapReactType } from "@decky/ui"
 import type { ReactElement } from "react"
 
 export const hasProp = (prop: string) => (child: any) => prop in child.props

@@ -1,11 +1,11 @@
-import { type ServerAPI, definePlugin, staticClasses } from "decky-frontend-lib"
+import { definePlugin, staticClasses } from "@decky/ui"
 import { IoIosStats } from "react-icons/io"
 import QuickAccessContent from "./QuickAccessContent"
 import patchLibraryApp from "./patchLibraryApp"
 import setupStyle from "./style"
 
-export default definePlugin((serverAPI: ServerAPI) => {
-  const unpatch = patchLibraryApp(serverAPI)
+export default definePlugin(() => {
+  const unpatch = patchLibraryApp()
   const removeStyle = setupStyle()
 
   return {

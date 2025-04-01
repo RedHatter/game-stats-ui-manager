@@ -1,4 +1,4 @@
-import { findClass } from "decky-frontend-lib"
+import { findClass } from "@decky/ui"
 import type { FC } from "react"
 
 type PlayBarSectionProps = {

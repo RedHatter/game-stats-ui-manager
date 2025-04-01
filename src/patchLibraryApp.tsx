@@ -1,11 +1,12 @@
-import { type ServerAPI, afterPatch } from "decky-frontend-lib"
+import { routerHook } from "@decky/api"
+import { afterPatch } from "@decky/ui"
 import type { ReactElement } from "react"
 import AppID from "./AppID"
 import PlayerCount from "./PlayerCount"
 import { hasProp, patchSequence } from "./helpers"
 import { useStore, validIDs } from "./store"
 
-const patchLibraryApp = (serverAPI: ServerAPI) => {
+const patchLibraryApp = () => {
   const unpatch: { value: null | (() => void) } = { value: null }
 
   const fn = (props: { path: string; children: ReactElement }) => {
@@ -19,7 +20,7 @@ const patchLibraryApp = (serverAPI: ServerAPI) => {
       (ret) => ret.props.children[0],
       (ret) => ret.props.children.find(hasProp("overview")),
       (ret) => {
-        serverAPI.routerHook.removePatch("/library/app/:appid", fn)
+        routerHook.removePatch("/library/app/:appid", fn)
 
         const patch = afterPatch(
           ret.props.children.find(hasProp("className")).props.children[0].type.prototype,
@@ -50,7 +51,7 @@ const patchLibraryApp = (serverAPI: ServerAPI) => {
     return props
   }
 
-  serverAPI.routerHook.addPatch("/library/app/:appid", fn)
+  routerHook.addPatch("/library/app/:appid", fn)
 
   return () => unpatch.value?.()
 }
