@@ -1,27 +1,27 @@
-import { Button, DialogButton, Dropdown, DropdownOption, PanelSection, ReorderableList } from 'decky-frontend-lib'
-import { FaEyeSlash } from 'react-icons/fa6'
-import { FC, useState } from 'react'
-import { localize } from './helpers'
-import { StoreEntry, useStore } from './store'
+import { Button, DialogButton, Dropdown, type DropdownOption, PanelSection, ReorderableList } from "decky-frontend-lib"
+import { type FC, useState } from "react"
+import { FaEyeSlash } from "react-icons/fa6"
+import { localize } from "./helpers"
+import { type StoreEntry, useStore } from "./store"
 
 const iconButtonStyles = {
-  background: 'none',
-  border: 'none',
-  outline: 'none',
-  color: '#8b929a',
-  display: 'flex',
-  position: 'absolute',
-  right: '0',
-  top: '50%',
-  transform: 'translateY(-50%)',
-  fontSize: '1.2em',
+  background: "none",
+  border: "none",
+  outline: "none",
+  color: "#8b929a",
+  display: "flex",
+  position: "absolute",
+  right: "0",
+  top: "50%",
+  transform: "translateY(-50%)",
+  fontSize: "1.2em",
 } as const
 
 const dropdownOptions: Array<DropdownOption> = [
-  { label: 'Normal', data: 'normal' },
-  { label: 'Small', data: 'small' },
-  { label: 'Smallest', data: 'smallest' },
-  { label: 'Icon only', data: 'iconOnly' },
+  { label: "Normal", data: "normal" },
+  { label: "Small", data: "small" },
+  { label: "Smallest", data: "smallest" },
+  { label: "Icon only", data: "iconOnly" },
 ]
 
 const QuickAccessContent: FC = () => {
@@ -43,15 +43,17 @@ const QuickAccessContent: FC = () => {
             data,
             position,
             label:
-              data.id === '#in_game' ? '(Custom) In game'
-              : data.id === '#appid' ? '(Custom) App ID'
-              : localize(data.id),
+              data.id === "#in_game"
+                ? "(Custom) In game"
+                : data.id === "#appid"
+                  ? "(Custom) App ID"
+                  : localize(data.id),
           }))}
           onSave={(entries) => set({ entries: entries.map((o) => o.data!) })}
           interactables={({ entry }) => (
             <Button
               onClick={() => toggle(entry.data!.id)}
-              onOKActionDescription={entry.data?.hidden ? 'Unhide' : 'Hide'}
+              onOKActionDescription={entry.data?.hidden ? "Unhide" : "Hide"}
               style={iconButtonStyles}
             >
               {entry.data?.hidden && <FaEyeSlash />}

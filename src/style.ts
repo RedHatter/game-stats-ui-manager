@@ -1,40 +1,40 @@
-import { findClass, findSP } from 'decky-frontend-lib'
-import { Store, useStore } from './store'
+import { findClass, findSP } from "decky-frontend-lib"
+import { type Store, useStore } from "./store"
 
-const updateStyle = (styleType: Store['playButtonSize']) => {
+const updateStyle = (styleType: Store["playButtonSize"]) => {
   const doc = findSP().document
 
-  let style = doc.getElementById('game-stats-ui-manager-style')
+  let style = doc.getElementById("game-stats-ui-manager-style")
 
   if (!style) {
-    style = doc.createElement('style')
-    style.id = 'game-stats-ui-manager-style'
+    style = doc.createElement("style")
+    style.id = "game-stats-ui-manager-style"
     doc.head.append(style)
   }
 
   style.textContent =
-    styleType === 'normal' ? '' : (
-      `
-      ${styleType === 'smallest' || styleType === 'iconOnly' ? `.${findClass('PlayButtonContainer')},` : ''}
-      .${findClass('PlayButtonContainer')} > div {
+    styleType === "normal"
+      ? ""
+      : `
+      ${styleType === "smallest" || styleType === "iconOnly" ? `.${findClass("PlayButtonContainer")},` : ""}
+      .${findClass("PlayButtonContainer")} > div {
         min-width: initial !important;
       }
 
       ${
-        styleType === 'iconOnly' ?
-          `
-          .${findClass('PlayButtonContainer')} svg {
+        styleType === "iconOnly"
+          ? `
+          .${findClass("PlayButtonContainer")} svg {
             margin-right: 0 !important;
           }
 
-          .${findClass('PlayButtonContainer')} svg + div {
+          .${findClass("PlayButtonContainer")} svg + div {
             display: none !important;
           }
           `
-        : ''
+          : ""
       }
       `
-    )
 }
 
 useStore.subscribe((state, prevState) => {
@@ -45,7 +45,7 @@ useStore.subscribe((state, prevState) => {
 
 const setupStyle = () => {
   updateStyle(useStore.getState().playButtonSize)
-  return () => findSP().document.getElementById('game-stats-ui-manager-style')?.remove()
+  return () => findSP().document.getElementById("game-stats-ui-manager-style")?.remove()
 }
 
 export default setupStyle
