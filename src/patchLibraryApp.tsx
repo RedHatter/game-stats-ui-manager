@@ -4,7 +4,7 @@ import type { ReactElement } from "react"
 import AppID from "./AppID"
 import PlayerCount from "./PlayerCount"
 import { hasProp, patchSequence } from "./helpers"
-import { useStore, validIDs } from "./store"
+import { store, validIDs } from "./store"
 
 const patchLibraryApp = () => {
   const unpatch: { value: null | (() => void) } = { value: null }
@@ -26,19 +26,17 @@ const patchLibraryApp = () => {
           ret.props.children.find(hasProp("className")).props.children[0].type.prototype,
           "render",
           (_: unknown, ret: ReactElement) => {
-            ret.props.children = useStore
-              .getState()
-              .entries.map((data) =>
-                data.hidden ? (
-                  false
-                ) : data.id === "#in_game" ? (
-                  <PlayerCount key="#in_game" />
-                ) : data.id === "#appid" ? (
-                  <AppID key="#appid" />
-                ) : (
-                  ret.props.children[validIDs.indexOf(data.id)]
-                ),
-              )
+            ret.props.children = store.state.entries.map((data) =>
+              data.hidden ? (
+                false
+              ) : data.id === "#in_game" ? (
+                <PlayerCount key="#in_game" />
+              ) : data.id === "#appid" ? (
+                <AppID key="#appid" />
+              ) : (
+                ret.props.children[validIDs.indexOf(data.id)]
+              ),
+            )
 
             return ret
           },

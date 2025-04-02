@@ -1,7 +1,7 @@
 import { findClassByName, findSP } from "@decky/ui"
-import { type Store, useStore } from "./store"
+import { type PlayButtonSizes, store } from "./store"
 
-const updateStyle = (styleType: Store["playButtonSize"]) => {
+const updateStyle = (styleType: PlayButtonSizes) => {
   const doc = findSP().document
 
   let style = doc.getElementById("game-stats-ui-manager-style")
@@ -37,14 +37,14 @@ const updateStyle = (styleType: Store["playButtonSize"]) => {
       `
 }
 
-useStore.subscribe((state, prevState) => {
-  if (state.playButtonSize !== prevState.playButtonSize) {
-    updateStyle(state.playButtonSize)
+store.subscribe(({ prevVal, currentVal }) => {
+  if (currentVal.playButtonSize !== prevVal.playButtonSize) {
+    updateStyle(currentVal.playButtonSize)
   }
 })
 
 const setupStyle = () => {
-  updateStyle(useStore.getState().playButtonSize)
+  updateStyle(store.state.playButtonSize)
   return () => findSP().document.getElementById("game-stats-ui-manager-style")?.remove()
 }
 

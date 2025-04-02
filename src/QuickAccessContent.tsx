@@ -1,8 +1,9 @@
 import { Button, DialogButton, Dropdown, type DropdownOption, PanelSection, ReorderableList } from "@decky/ui"
+import { useStore } from "@tanstack/react-store"
 import type { FC } from "react"
 import { FaEyeSlash } from "react-icons/fa6"
 import { localize } from "./helpers"
-import { type StoreEntry, useStore } from "./store"
+import { reset, set, store, toggleEntry } from "./store"
 
 const iconButtonStyles = {
   background: "none",
@@ -25,7 +26,7 @@ const dropdownOptions: Array<DropdownOption> = [
 ]
 
 const QuickAccessContent: FC = () => {
-  const { entries, playButtonSize: actionButtonStyle, set, toggle, reset } = useStore()
+  const { entries, playButtonSize } = useStore(store)
 
   return (
     <>
@@ -33,12 +34,12 @@ const QuickAccessContent: FC = () => {
         <Dropdown
           menuLabel="Play Button Size"
           rgOptions={dropdownOptions}
-          selectedOption={actionButtonStyle}
+          selectedOption={playButtonSize}
           onChange={(opt) => set({ playButtonSize: opt.data })}
         />
       </PanelSection>
       <PanelSection title="Game Info Sections">
-        <ReorderableList<StoreEntry>
+        <ReorderableList
           entries={entries.map((data, position) => ({
             data,
             position,
@@ -52,7 +53,7 @@ const QuickAccessContent: FC = () => {
           onSave={(entries) => set({ entries: entries.map((o) => o.data!) })}
           interactables={({ entry }) => (
             <Button
-              onClick={() => toggle(entry.data!.id)}
+              onClick={() => toggleEntry(entry.data!.id)}
               onOKActionDescription={entry.data?.hidden ? "Unhide" : "Hide"}
               style={iconButtonStyles}
             >

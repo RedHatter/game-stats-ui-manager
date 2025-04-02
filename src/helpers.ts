@@ -50,5 +50,3 @@ export const localize = findModuleChild(
     typeof m === "object" &&
     Object.values(m).find((p) => typeof p === "function" && /function.*LocalizeString.*return void/.test(p.toString())),
 )
-
-export type ArrayElement<T extends readonly unknown[]> = T extends readonly (infer E)[] ? E : never

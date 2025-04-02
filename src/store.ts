@@ -1,6 +1,8 @@
-import { type StoreApi, create } from "zustand"
-import { persist } from "zustand/middleware"
-import type { ArrayElement } from "./helpers"
+import { Store } from "@tanstack/react-store"
+
+const storageKey = "game-stats-ui-manager-v2"
+
+export type PlayButtonSizes = "normal" | "small" | "smallest" | "iconOnly"
 
 export const validIDs = [
   "#AppDetails_ClaimContent",
@@ -15,43 +17,24 @@ export const validIDs = [
   "#appid",
 ] as const
 
-export type StoreEntry = {
-  id: ArrayElement<typeof validIDs>
-  hidden: boolean
-}
-
-export type Store = {
-  playButtonSize: "normal" | "small" | "smallest" | "iconOnly"
-
-  entries: Array<StoreEntry>
-
-  set: StoreApi<Store>["setState"]
-
-  toggle: (id: string) => void
-
-  reset: () => void
-}
-
 const initialState = {
-  playButtonSize: "normal",
-
+  playButtonSize: "normal" as PlayButtonSizes,
   entries: validIDs.map((id) => ({ id, hidden: false })),
 } as const
 
-export const useStore = create<Store>()(
-  persist(
-    (set) => ({
-      ...initialState,
+const storedValue = localStorage.getItem(storageKey)
 
-      set,
+export const store = new Store(storedValue ? (JSON.parse(storedValue) as typeof initialState) : initialState)
 
-      toggle: (id) =>
-        set(({ entries }) => ({
-          entries: entries.map((data) => (data.id === id ? { ...data, hidden: !data.hidden } : data)),
-        })),
+export const toggleEntry = (id: string) =>
+  store.setState((state) => ({
+    ...state,
+    entries: state.entries.map((data) => (data.id === id ? { ...data, hidden: !data.hidden } : data)),
+  }))
 
-      reset: () => set(initialState),
-    }),
-    { name: "game-stats-ui-manager" },
-  ),
-)
+export const set = (partialState: Partial<typeof initialState>) =>
+  store.setState((state) => ({ ...state, ...partialState }))
+
+export const reset = () => store.setState(() => initialState)
+
+store.subscribe(({ currentVal }) => localStorage.setItem(storageKey, JSON.stringify(currentVal)))
